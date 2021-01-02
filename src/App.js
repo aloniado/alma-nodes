@@ -4,8 +4,6 @@ import Gallery from "./pages/Gallery";
 import React from "react";
 import {BrowserRouter as Router, Route, Switch, useHistory} from "react-router-dom";
 
-// import { useHistory } from 'react-router-dom';
-
 
 function App() {
     // return (

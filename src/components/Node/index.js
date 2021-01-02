@@ -1,55 +1,73 @@
 import React, {Component, useState} from "react";
 import NodeIcon from '../../assets/images/node.svg'
 import './index.css';
-// // import { browserHistory } from 'react-router';
-//
-// import { Link } from "react-router-dom";
+import axios from "axios";
 
 class Node extends Component {
-    state = {}
-    childrenImages = {}
-
-
     constructor(props) {
         super(props);
         this.nodeClickHandler = this.nodeClickHandler.bind(this);
         this.updateExtendedChild = this.updateExtendedChild.bind(this)
 
+        // console.log(this.props);
+
         this.state = {
-            type: props.data.type,
-            children: props.data.children ? props.data.children : null,
-            level: props.level,
-            // extended: props.extended ? props.extended : false,
-            extendedChild: null,
-            // extendedSibling: null,
-            id:  props.headNode ? 'l0-c0' : props.id,
+            type: this.props.type,
+            label: this.props.label ? this.props.label : null,
+            children: [],
+            url: this.props.url,
+            headExpand: false
         }
-
-        if (this.props.headNode) {
-            this.state['headExpand'] = false;
-        }
-
-        if (this.state.children) {
-            for (let i=0; i<this.state.children.length; i++) {
-                this.state.children[i].id = `l${this.state.level}-c${i}`;
-                if (this.state.children[i].type) {
-                    this.childrenImages[this.state.children[i].id] = this.state.children[i].url
-                }
-            }
-            // console.log('>>', this.state.children)
-        }
-
-        // if (this.state.level === 0)
-
     }
 
-    nodeClickHandler() {
-        console.log('click. node props:', this.props)
+    initNode() {
+        let config = {
+            headers: {
+                'X-TOKEN': '2d4e69f4823176197ccf41caa5ee6456',
+            }
+        }
+        let url = this.props.url
+
+        axios.get(url, config)
+            .then((res) => {
+
+                console.log(res)
+                if (res.status === 201) {
+                    this.setState(res.data.data, () => {
+                        console.log('state after call:', this.state.label, this.state)
+                    });
+                }
+                // this.setState(res.data)
+            }).catch((e) => {
+            console.log(e)
+            alert('error, please refresh to try again')
+        })
+
+        this.setState(
+            {
+                extendedChild: null,
+                id: this.props.id,
+                url: this.props.url,
+                init: true,
+            }, () => {
+                console.log('after init: ', this.state)
+            }
+        )
+    }
+
+    async nodeClickHandler() {
+        //init node if no data yet:
+        if (!this.state.init) {
+            await this.initNode();
+        }
 
         //head node handler:
         if (this.props.headNode) {
+            console.log('head')
             this.setState({
                 headExpand: !this.state.headExpand
+            }, () => {
+                console.log(this.state)
             })
             return;
         }
@@ -57,21 +75,15 @@ class Node extends Component {
         //image handler:
         if (this.state.type) {
             console.log('image click!')
-            console.log(window);
             // window.location.href = '/gallery';
-
-
             return;
         }
 
-        //childless node handler:
-        if (!this.state.children) {
-            console.log('no children')
-            return;
-        }
 
         //directory node with children handler
         let status = (this.props.extendedSibling === this.state.id)
+
+        console.log('!!!', this.state)
         this.props.updateExtendedChild(this.state.id, status);
     }
 
@@ -86,15 +98,14 @@ class Node extends Component {
         this.setState({
             extendedChild: value
         }, () => {
-            console.log('parent id:', this.state.id, 'extendedChild:', this.state.extendedChild)
+            console.log('parent label:', this.state.label, 'extendedChild:', this.state.extendedChild)
         })
     }
 
 
-
     render() {
-        // console.log('props:',this.props)
-        // console.log('state:',this.state)
+        // console.log('props:', this.props)
+        // console.log('state:', this.state)
 
         return (
             <div>
@@ -106,18 +117,21 @@ class Node extends Component {
                 </div>
 
                 {
-                    this.state.children && ((this.props.headNode && this.state.headExpand) || (this.props.extendedSibling === this.state.id)) && <div className="level">
-                        <div>level: {this.state.level}</div>
+                    this.state.children && ((this.props.headNode && this.state.headExpand) || (this.props.extendedSibling === this.state.id)) &&
+                    <div className="level">
+                        {/*<div>label: {this.state.label}</div>*/}
                         {
                             this.state.children.map(el => <Node data={el}
-                                                                level={this.state.level + 1}
-                                                                key={el.id}
-                                                                id={el.id}
-                                                                extendedSibling={this.state.extendedChild}
-                                                                updateExtendedChild={this.updateExtendedChild}
-                                                                headNode={false}
-                                                                siblingImages={this.childrenImages}
-                                                                // history={}
+                                // level={this.state.level + 1}
+                                key={`l${this.state.level}-${el.label}`}
+                                id={`l${this.state.level}-${el.label}`}
+                                extendedSibling={this.state.extendedChild}
+                                updateExtendedChild={this.updateExtendedChild}
+                                headNode={false}
+                                // siblingImages={this.childrenImages}
+                                                                type={el.type}
+                                                                url={this.state.url + '/' + el.label}
+                                // history={}
                             />)
                         }
                     </div>

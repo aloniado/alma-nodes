@@ -1,8 +1,34 @@
-.gallery-container {
-    display: grid
+.grid-container {
+    /*display:flex;*/
+    /*align-content: center;*/
 
+    /*flex-wrap: wrap;*/
+
+    /*max-width: 90%;*/
+
+    background: gray;
+    width: 80%;
+    max-width: 1000px;
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row wrap;
+
+    border: 3px solid blue;
 }
 
-.secondary-image {
-    width: 50px;
+.grid-item {
+    min-width: 180px;
+    padding: 2px;
+    flex:19%;
+
+    flex-grow: 2;
+}
+
+.secondary-img {
+    width: 100%
+}
+
+.primary-image {
+    width:100%;
+    overflow:hidden;
 }

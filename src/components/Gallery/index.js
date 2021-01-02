@@ -59,19 +59,47 @@ class Gallery extends Component {
         })
     }
 
+    setImageAsPrimary(label) {
+        let images = this.state.images;
+
+        for (let i = 0; i < images.length; i++) {
+            if (images[i].label === label) {
+
+                let image = images[i];
+
+                console.log(image)
+
+                images.splice(i, 1);
+                images.push(this.state.selectedImage);
+
+                this.setState({
+                    selectedImage: image,
+                    images: images
+                })
+                return;
+            }
+        }
+
+    }
+
     render() {
         return (
             <div>
                 {
-                    this.state.selectedImage && <div>
+                    this.state.selectedImage && <div className={'primary-image'}>
                         <img src={this.state.selectedImage.url} alt=""/>
                     </div>
                 }
                 {
                     this.state.images &&
-                    <div className={'gallery-container'}>
+                    <div className={'grid-container'}>
                         {
-                            this.state.images.map(el => <img className={'secondary-image'} src={el.url} alt="" key={el.label} onClick={this.setImageAsPrimary}/>)
+                            this.state.images.map(el => <div key={el.label} className={'grid-item'}>
+                                <img src={el.url}
+                                     className={'secondary-img'}
+                                     alt=""
+                                     onClick={() => this.setImageAsPrimary(el.label)}/>
+                            </div>)
                         }
                     </div>
                 }

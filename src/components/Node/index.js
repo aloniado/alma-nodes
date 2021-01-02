@@ -108,8 +108,10 @@ class Node extends Component {
     }
 
     render() {
+        // const transform = {transform: [{rotate: this.state.position.rotation + 'deg'}]}
         return (
             <div>
+                <div className={'node-container'} style={{}}>
                 {
                     this.state.type === 0 &&
                     <div className={'folder-node node-icon'} onClick={this.nodeClickHandler}>
@@ -126,6 +128,7 @@ class Node extends Component {
                         </Link>
                     </div>
                 }
+                </div>
 
                 {
                     this.state.children && ((this.props.headNode && this.state.headExpand) || (this.props.extendedSibling === this.state.id)) &&

@@ -18,7 +18,11 @@ class Node extends Component {
             children: [],
             url: this.props.url,
             headExpand: false,
-            init: false
+            init: false,
+            position: props.position ? props.position : {
+                siblingCount: 1,
+                siblingPosition: 1
+            }
         }
     }
 
@@ -32,6 +36,7 @@ class Node extends Component {
 
         axios.get(url, config)
             .then((res) => {
+
                 if (res.status === 201) {
                     this.setState(res.data.data);
                     this.setState({
@@ -53,6 +58,7 @@ class Node extends Component {
     }
 
     async nodeClickHandler() {
+        console.log(this.state);
         //init node if no data yet:
         if (!this.state.init) {
             await this.initNode();
@@ -108,14 +114,18 @@ class Node extends Component {
                     this.state.children && ((this.props.headNode && this.state.headExpand) || (this.props.extendedSibling === this.state.id)) &&
                     <div className="level">
                         {
-                            this.state.children.map(el => <Node data={el}
-                                                                key={`l${this.state.level}-${el.label}`}
-                                                                id={`l${this.state.level}-${el.label}`}
+                            this.state.children.map((el, i) => <Node data={el}
+                                                                key={`l${this.state.level}-${i}`}
+                                                                id={`l${this.state.level}-${i}`}
                                                                 extendedSibling={this.state.extendedChild}
                                                                 updateExtendedChild={this.updateExtendedChild}
                                                                 headNode={false}
                                                                 type={el.type}
                                                                 url={this.state.url + '/' + el.label}
+                                                                position={{
+                                                                    siblingCount: this.state.children.length,
+                                                                    siblingPosition: i
+                                                                }}
                             />)
                         }
                     </div>

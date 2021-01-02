@@ -3,6 +3,7 @@ import './index.css';
 import axios from "axios";
 import {Link} from 'react-router-dom'
 import {BsFillCircleFill} from "react-icons/bs";
+
 class Node extends Component {
 
 
@@ -21,9 +22,12 @@ class Node extends Component {
             init: false,
             position: props.position ? props.position : {
                 siblingCount: 1,
-                siblingPosition: 1
+                siblingPosition: 1,
+                level: this.props.level
             }
         }
+
+        this.calculatePosition();
     }
 
     initNode() {
@@ -90,6 +94,19 @@ class Node extends Component {
         })
     }
 
+    calculatePosition() {
+        // console.log(this.state.position)
+        let position = this.state.position
+
+        let angle = (90 / (position.siblingCount * 2));
+        position.rotation = angle + angle * 2 * position.siblingPosition;
+        position.distance = this.props.level ? this.props.level : 0
+
+        this.setState({
+            position: position
+        })
+    }
+
     render() {
         return (
             <div>
@@ -115,17 +132,19 @@ class Node extends Component {
                     <div className="level">
                         {
                             this.state.children.map((el, i) => <Node data={el}
-                                                                key={`l${this.state.level}-${i}`}
-                                                                id={`l${this.state.level}-${i}`}
-                                                                extendedSibling={this.state.extendedChild}
-                                                                updateExtendedChild={this.updateExtendedChild}
-                                                                headNode={false}
-                                                                type={el.type}
-                                                                url={this.state.url + '/' + el.label}
-                                                                position={{
-                                                                    siblingCount: this.state.children.length,
-                                                                    siblingPosition: i
-                                                                }}
+                                                                     key={`l${this.state.level}-${i}`}
+                                                                     id={`l${this.state.level}-${i}`}
+                                                                     extendedSibling={this.state.extendedChild}
+                                                                     updateExtendedChild={this.updateExtendedChild}
+                                                                     headNode={false}
+                                                                     type={el.type}
+                                                                     url={this.state.url + '/' + el.label}
+                                                                     position={{
+                                                                         siblingCount: this.state.children.length,
+                                                                         siblingPosition: i,
+                                                                         level: this.state.position.level + 1
+                                                                     }}
+
                             />)
                         }
                     </div>

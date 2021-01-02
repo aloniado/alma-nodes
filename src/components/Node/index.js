@@ -101,7 +101,7 @@ class Node extends Component {
 
     render() {
         if (this.state.type === 1) {
-            console.log('IMAGE')
+            console.log('IMAGE', this.props.url)
             console.log('props:', this.props)
             console.log('state:', this.state)
         }
@@ -122,7 +122,9 @@ class Node extends Component {
                 {
                     this.state.type === 1 &&
                     <div className={'image-node'}>
-                        <Link to={'/gallery?path='+this.props.data.url}>[*]</Link>
+                        <Link
+                            to={'/picture?path='+this.props.url.split('?path=')[1]} params={{ testvalue: "hello" }}
+                        >[*]</Link>
                     </div>
                 }
 

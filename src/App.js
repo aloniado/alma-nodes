@@ -1,6 +1,6 @@
 import './App.css';
 import Map from "./pages/Map";
-import Gallery from "./pages/Gallery";
+import Picture from "./pages/Picture";
 import React from "react";
 import {BrowserRouter as Router, Route, Switch, useHistory} from "react-router-dom";
 
@@ -11,7 +11,7 @@ function App() {
     //         <Stack.Screen name="settings" component={Map} />
     //         <Stack.Screen
     //             name="profile"
-    //             component={Gallery}
+    //             component={Picture}
     //             options={{ title: 'John Doe' }}
     //         />
     //     </Stack.Navigator>
@@ -21,7 +21,7 @@ function App() {
         <Router>
             <div className="App">
                 <Route path="/" exact component={Map}/>
-                <Route path="/gallery" component={Gallery}/>
+                <Route path="/picture" component={Picture}/>
             </div>
         </Router>
 

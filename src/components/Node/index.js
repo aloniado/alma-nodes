@@ -100,11 +100,11 @@ class Node extends Component {
 
 
     render() {
-        if (this.state.type === 1) {
-            console.log('IMAGE', this.props.url)
-            console.log('props:', this.props)
-            console.log('state:', this.state)
-        }
+        // if (this.state.type === 1) {
+        //     console.log('IMAGE', this.props.url)
+        //     console.log('props:', this.props)
+        //     console.log('state:', this.state)
+        // }
         // console.log('props:', this.props)
         // console.log('state:', this.state)
 

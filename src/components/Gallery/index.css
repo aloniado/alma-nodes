@@ -1,0 +1,8 @@
+.gallery-container {
+    display: grid
+
+}
+
+.secondary-image {
+    width: 50px;
+}

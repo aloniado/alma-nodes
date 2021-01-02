@@ -1,14 +1,11 @@
 .node-icon {
-    width: 20px;
+    font-size: 30px;
 }
 
 .level {
     display: flex;
     justify-content: space-evenly;
-
-    padding-top: 20px;
-    border: 1px solid darkseagreen;
-
+    padding-top: 50px;
     position: absolute;
     width: 100%;
     left: 0;
@@ -20,8 +17,4 @@
 
 .folder-node {
     color: gray;
-}
-
-.bold {
-    font-weight: 600;
 }

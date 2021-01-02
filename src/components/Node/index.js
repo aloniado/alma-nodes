@@ -1,12 +1,12 @@
-import React, {Component, useState} from "react";
-import NodeIcon from '../../assets/images/node.svg'
+import React, {Component} from "react";
 import './index.css';
 import axios from "axios";
-import { Link } from 'react-router-dom'
-
+import {Link} from 'react-router-dom'
+import {BsFillCircleFill} from "react-icons/bs";
 class Node extends Component {
 
-    constructor(props, history) {
+
+    constructor(props) {
         super(props);
 
         this.nodeClickHandler = this.nodeClickHandler.bind(this);
@@ -17,10 +17,10 @@ class Node extends Component {
             label: this.props.label ? this.props.label : null,
             children: [],
             url: this.props.url,
-            headExpand: false
+            headExpand: false,
+            init: false
         }
     }
-
 
     initNode() {
         let config = {
@@ -32,31 +32,24 @@ class Node extends Component {
 
         axios.get(url, config)
             .then((res) => {
-
-                console.log(res)
                 if (res.status === 201) {
                     this.setState(res.data.data);
                     this.setState({
                         init: true
                     })
                 }
-                // this.setState(res.data)
             }).catch((e) => {
             this.setState({
-                init: false
+                headExpand: false
             })
-            console.log(e)
-            alert('error, please refresh to try again')
+            alert('Error, try again')
         })
 
         this.setState(
             {
                 extendedChild: null,
                 id: this.props.id,
-            }, () => {
-                console.log('after init: ', this.state)
-            }
-        )
+            })
     }
 
     async nodeClickHandler() {
@@ -67,24 +60,19 @@ class Node extends Component {
 
         //head node handler:
         if (this.props.headNode) {
-            console.log('head')
             this.setState({
                 headExpand: !this.state.headExpand
-            }, () => {
-                console.log(this.state)
             })
             return;
         }
 
         //directory node with children handler
         let status = (this.props.extendedSibling === this.state.id)
-
-        console.log('!!!', this.state)
         this.props.updateExtendedChild(this.state.id, status);
     }
 
     updateExtendedChild(id, status) {
-        console.log('child event', id, status);
+        // console.log('child event', id, status);
 
         let value = id;
         if (id === this.state.extendedChild) {
@@ -93,45 +81,32 @@ class Node extends Component {
 
         this.setState({
             extendedChild: value
-        }, () => {
-            console.log('parent label:', this.state.label, 'extendedChild:', this.state.extendedChild)
         })
     }
 
-
     render() {
-        // if (this.state.type === 1) {
-        //     console.log('IMAGE', this.props.url)
-        //     console.log('props:', this.props)
-        //     console.log('state:', this.state)
-        // }
-        // console.log('props:', this.props)
-        // console.log('state:', this.state)
-
         return (
-
             <div>
                 {
                     this.state.type === 0 &&
-                    <div className={'folder-node'} onClick={this.nodeClickHandler}>
-                        <div>
-                            [*]
-                        </div>
+                    <div className={'folder-node node-icon'} onClick={this.nodeClickHandler}>
+                        <BsFillCircleFill/>
                     </div>
                 }
                 {
                     this.state.type === 1 &&
-                    <div className={'image-node'}>
+                    <div className={'image-node node-icon'}>
                         <Link
-                            to={'/picture?path='+this.props.url.split('?path=')[1]} params={{ testvalue: "hello" }}
-                        >[*]</Link>
+                            to={'/picture?path=' + this.props.url.split('?path=')[1]}
+                            style={{color: 'inherit', textDecoration: 'inherit'}}>
+                            <BsFillCircleFill/>
+                        </Link>
                     </div>
                 }
 
                 {
                     this.state.children && ((this.props.headNode && this.state.headExpand) || (this.props.extendedSibling === this.state.id)) &&
                     <div className="level">
-                        {/*<div>label: {this.state.label}</div>*/}
                         {
                             this.state.children.map(el => <Node data={el}
                                                                 key={`l${this.state.level}-${el.label}`}
@@ -141,7 +116,6 @@ class Node extends Component {
                                                                 headNode={false}
                                                                 type={el.type}
                                                                 url={this.state.url + '/' + el.label}
-                                                                // imageUrl={this.props.data && this.props.data.url ? this.props.data.url : null}
                             />)
                         }
                     </div>

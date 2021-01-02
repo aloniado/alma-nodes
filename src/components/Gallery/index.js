@@ -84,28 +84,34 @@ class Gallery extends Component {
 
     render() {
         return (
-            <div>
+            <div className={'gallery-container-outer'}>
+            <div className={'gallery-container-inner'}>
                 {
-                    this.state.selectedImage && <div className={'primary-image'}>
-                        <img src={this.state.selectedImage.url} alt=""/>
+                    this.state.selectedImage &&
+                    <div>
+                        <div className={'primary-image-container'}>
+                            <img src={this.state.selectedImage.url}  className={'primary-image'} alt=""/>
+                        </div>
                     </div>
                 }
                 {
                     this.state.images &&
-                    <div className={'grid-container'}>
-                        {
-                            this.state.images.map(el => <div key={el.label} className={'grid-item'}>
-                                <img src={el.url}
-                                     className={'secondary-img'}
-                                     alt=""
-                                     onClick={() => this.setImageAsPrimary(el.label)}/>
-                            </div>)
-                        }
+                    <div>
+                        <div className={'grid-container'}>
+                            {
+                                this.state.images.map(el => <div key={el.label} className={'grid-item'}>
+                                    <img src={el.url}
+                                         className={'secondary-img'}
+                                         alt=""
+                                         onClick={() => this.setImageAsPrimary(el.label)}/>
+                                </div>)
+                            }
+                        </div>
                     </div>
                 }
 
             </div>
-
+            </div>
 
         )
     }

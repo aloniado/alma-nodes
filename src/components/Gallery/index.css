@@ -1,34 +1,44 @@
+.gallery-container-outer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.gallery-container-inner {
+    border: 2px solid black;
+    width: 100%;
+    max-width: 600px;
+}
+
+
 .grid-container {
-    /*display:flex;*/
-    /*align-content: center;*/
-
-    /*flex-wrap: wrap;*/
-
-    /*max-width: 90%;*/
-
-    background: gray;
-    width: 80%;
-    max-width: 1000px;
+    width: 100%;
     display: flex;
     justify-content: space-around;
     flex-flow: row wrap;
-
-    border: 3px solid blue;
 }
 
 .grid-item {
-    min-width: 180px;
+    min-width: 100px;
     padding: 2px;
     flex:19%;
 
     flex-grow: 2;
+    max-height: 150px;
+    overflow: hidden;
 }
 
 .secondary-img {
-    width: 100%
+    width: 100%;
+
+}
+
+.primary-image-container {
+    width:100%;
+    max-height: 400px;
+    max-width: 600px;
+    overflow:hidden;
 }
 
 .primary-image {
-    width:100%;
-    overflow:hidden;
+    width: 100%;
 }

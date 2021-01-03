@@ -2,11 +2,16 @@ import React, {Component} from "react";
 import './index.css';
 import axios from "axios";
 
+import { BiExpand } from "react-icons/bi";
+import { BiCollapse } from "react-icons/bi";
+
 
 class Gallery extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            expand: false
+        };
     }
 
     componentDidMount() {
@@ -39,6 +44,7 @@ class Gallery extends Component {
                     }
                     this.setState({images: images});
                 }
+                console.log(this.state)
             }).catch((e) => {
             alert('Error getting ima, please refresh to try again')
             //todo: send to route '/'
@@ -64,7 +70,15 @@ class Gallery extends Component {
         }
     }
 
+    toggleExpand() {
+        console.log(this.state);
+        let expand = this.state.expand
+        console.log(expand)
+        this.setState({expand: !expand})
+    }
+
     render() {
+        // let expand = this.state.expand;
         return (
             <div className={'gallery-container-outer'}>
                 <div className={'gallery-container-inner'}>
@@ -72,7 +86,12 @@ class Gallery extends Component {
                         this.state.selectedImage &&
                         <div>
                             <div className={'primary-image-container'}>
-                                <img src={this.state.selectedImage.url} className={'primary-image'} alt=""/>
+                                <img src={this.state.selectedImage.url} className={this.state.expand ? '' : 'primary-image'} alt=""/>
+                            </div>
+                            <div onClick={this.toggleExpand.bind(this)} >
+                                {this.state.expand}
+                                <BiExpand className={this.state.expand ? 'show expand-container' : 'hide'} />
+                                <BiCollapse className={this.state.expand ? 'hide' : 'show expand-container'}/>
                             </div>
                         </div>
                     }

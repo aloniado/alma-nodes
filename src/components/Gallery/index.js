@@ -31,7 +31,7 @@ class Gallery extends Component {
         let arr = imgUrl.split('/');
         let selectedImageLabel = arr[arr.length - 1];
 
-        if (!selectedImageLabel) {
+        if (!selectedImageLabel || !selectedImageLabel.includes('picture')) {
             alert('Url error, going back home.')
             this.props.history.push('/')
             return;

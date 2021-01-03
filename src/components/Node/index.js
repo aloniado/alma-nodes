@@ -27,7 +27,6 @@ class Node extends Component {
         }
 
         this.calculatePosition();
-        console.log('...',this.state)
     }
 
     initNode() {
@@ -112,12 +111,10 @@ class Node extends Component {
         position.x = r * Math.cos(position.rotation * Math.PI / 180);   //px
         position.y = r * Math.sin(position.rotation * Math.PI / 180);   //px
 
-        console.log('>', window.expandedLevel, position)
+        // console.log('>', window.expandedLevel, position)
 
         this.setState({
             position: position
-        }, () => {
-            console.log(this.state.label, this.state.position)
         })
     }
 

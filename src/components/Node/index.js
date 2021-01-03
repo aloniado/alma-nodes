@@ -98,8 +98,6 @@ class Node extends Component {
         this.setState({
             extendedChild: value
         })
-
-        window.expandedLevel = value ? window.expandedLevel++ : window.expandedLevel--;
     }
 
     calculatePosition() {

@@ -101,7 +101,11 @@ class Node extends Component {
 
         let angle = (90 / (position.siblingCount * 2));
         position.rotation = Math.round(angle + angle * 2 * position.siblingPosition);
-        position.level = this.props.position && this.props.position.level ? this.props.position.level : 0
+        position.level = this.props.position && this.props.position.level ? this.props.position.level : 0;
+
+        position.x = position.level * 150 * Math.cos(position.rotation * Math.PI / 180) ;   //px
+        // position.y = position.level * 100 * Math.sin(position.rotation * Math.PI / 180);  //vh
+        position.y = position.level ? 100 / position.siblingCount * position.siblingPosition : 0;   //vh
 
         console.log('calculating', position)
 
@@ -113,10 +117,14 @@ class Node extends Component {
     }
 
     render() {
-        // const transform = {transform: [{rotate: this.state.position.rotation + 'deg'}]}
+        const styles = {
+            transform: `translateX(${this.state.position.x}px) translateY(${this.state.position.y}vh)`
+
+        };
+
         return (
             <div>
-                <div className={'node-container'} style={{}}>
+                <div className={'node-container'} style={styles}>
                 {
                     this.state.type === 0 &&
                     <div className={'folder-node node-icon'} onClick={this.nodeClickHandler}>

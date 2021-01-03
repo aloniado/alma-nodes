@@ -1,6 +1,11 @@
 .node-container {
-    /*border: 1px solid black;*/
-    /*max-width: 40px;*/
+    position: absolute;
+    left: 10px;
+    top: 10px;
+
+    border: 1px solid black;
+    max-width: 40px;
+    /*transform: rotate(20deg);*/
 }
 
 
@@ -8,14 +13,14 @@
     font-size: 30px;
 }
 
-.level {
-    display: flex;
-    justify-content: space-evenly;
-    padding-top: 50px;
-    position: absolute;
-    width: 100%;
-    left: 0;
-}
+/*.level {*/
+/*    display: flex;*/
+/*    justify-content: space-evenly;*/
+/*    padding-top: 50px;*/
+/*    position: absolute;*/
+/*    width: 100%;*/
+/*    left: 0;*/
+/*}*/
 
 .image-node {
     color: lightskyblue;

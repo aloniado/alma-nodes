@@ -53,6 +53,7 @@ class Node extends Component {
             this.setState({
                 headExpand: false
             })
+            this.props.updateExtendedChild(this.state.id);
             alert('Error, try again')
         })
 
@@ -83,7 +84,7 @@ class Node extends Component {
         this.props.updateExtendedChild(this.state.id, status);
     }
 
-    updateExtendedChild(id, status) {
+    updateExtendedChild(id, err) {
         // console.log('child event', id, status);
 
         let value = id;
@@ -106,6 +107,7 @@ class Node extends Component {
         position.level = this.props.position && this.props.position.level ? this.props.position.level : 0;
 
         let r = position.level * 200;
+        // r=(100/(window.expandedLevel + 1))*this.state.position.level;
 
         position.x = r * Math.cos(position.rotation * Math.PI / 180);   //px
         position.y = r * Math.sin(position.rotation * Math.PI / 180);   //px
@@ -122,6 +124,7 @@ class Node extends Component {
     render() {
         const styles = {
             transform: `translateX(${this.state.position.x}px) translateY(${this.state.position.y}px)`
+            // transform: `translateX(${this.state.position.x}vw) translateY(${this.state.position.y}vh)`
         };
 
         return (

@@ -3,8 +3,7 @@
     left: 10px;
     top: 10px;
 
-    border: 1px solid black;
-    max-width: 40px;
+    width: 40px;
     /*transform: rotate(20deg);*/
 }
 
@@ -28,4 +27,12 @@
 
 .folder-node {
     color: gray;
+}
+
+.folder-node-expanded {
+    color: gray;
+}
+
+.head-node {
+    font-size: 60px;
 }

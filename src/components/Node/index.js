@@ -99,13 +99,15 @@ class Node extends Component {
         // console.log(this.state.position)
         let position = this.state.position
 
-        let angle = (90 / (position.siblingCount * 2));
-        position.rotation = Math.round(angle + angle * 2 * position.siblingPosition);
+        let angle = 90 / (position.siblingCount -1); // angle between npdes
+
+        position.rotation = Math.round(angle * position.siblingPosition);
         position.level = this.props.position && this.props.position.level ? this.props.position.level : 0;
 
-        position.x = position.level * 150 * Math.cos(position.rotation * Math.PI / 180) ;   //px
-        // position.y = position.level * 100 * Math.sin(position.rotation * Math.PI / 180);  //vh
-        position.y = position.level ? 100 / position.siblingCount * position.siblingPosition : 0;   //vh
+        let r = position.level * 200;
+
+        position.x = r * Math.cos(position.rotation * Math.PI / 180) ;   //px
+        position.y = r  * Math.sin(position.rotation * Math.PI / 180) ;   //px
 
         console.log('calculating', position)
 
@@ -118,8 +120,7 @@ class Node extends Component {
 
     render() {
         const styles = {
-            transform: `translateX(${this.state.position.x}px) translateY(${this.state.position.y}vh)`
-
+            transform: `translateX(${this.state.position.x}px) translateY(${this.state.position.y}px)`
         };
 
         return (
@@ -127,8 +128,8 @@ class Node extends Component {
                 <div className={'node-container'} style={styles}>
                 {
                     this.state.type === 0 &&
-                    <div className={'folder-node node-icon'} onClick={this.nodeClickHandler}>
-                        <BsFillCircleFill/>
+                    <div className={'folder-node node-icon'}  onClick={this.nodeClickHandler}>
+                        <BsFillCircleFill className={this.props.headNode ? 'head-node' : ''} />
                     </div>
                 }
                 {

@@ -104,9 +104,9 @@ class Node extends Component {
         // console.log(this.state.position)
         let position = this.state.position
 
-        let angle = 90 / (position.siblingCount - 1); // angle between npdes
+        let angle = 90 / (position.siblingCount - 1); // angle between nodes in an arch
 
-        position.rotation = Math.round(angle * position.siblingPosition);
+        position.rotation = Math.round(angle * position.siblingPosition);   //node angle ( 0 - 90 )
         position.level = this.props.position && this.props.position.level ? this.props.position.level : 0;
 
         let r = position.level * 200;

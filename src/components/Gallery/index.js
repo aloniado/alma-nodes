@@ -5,20 +5,41 @@ import axios from "axios";
 import { BiExpand } from "react-icons/bi";
 import { BiCollapse } from "react-icons/bi";
 
+import {withRouter} from 'react-router-dom';
+
+
 
 class Gallery extends Component {
-    constructor(props) {
+    constructor(props, history) {
         super(props);
+
         this.state = {
             expand: false
         };
     }
 
+
+    /**
+     * initializing component:
+     * getting data, etc.
+     */
     componentDidMount() {
         let imgUrl = window.location.search.replace('?path=', '');
 
+        if (!imgUrl) {
+            alert('Url error, going back home.')
+            this.props.history.push('/')
+            return;
+        }
+
         let arr = imgUrl.split('/');
         let selectedImageLabel = arr[arr.length - 1];
+
+        if (!selectedImageLabel) {
+            alert('Url error, going back home.')
+            this.props.history.push('/')
+            return;
+        }
         arr.pop();
 
         let url = 'http://18.203.83.17/public/explorePictures?path=' + arr.join('/');
@@ -46,11 +67,16 @@ class Gallery extends Component {
                 }
                 console.log(this.state)
             }).catch((e) => {
-            alert('Error getting ima, please refresh to try again')
-            //todo: send to route '/'
+            alert('Error getting image, going back home.')
+            this.props.history.push('/')
         })
     }
 
+    /**
+     * sets selected image primary
+     * pushes primary image to secondary images array
+     * @param label
+     */
     setImageAsPrimary(label) {
         let images = this.state.images;
 
@@ -70,16 +96,17 @@ class Gallery extends Component {
         }
     }
 
+    /**
+     * type of displaying main image: fit / original
+     */
     toggleExpand() {
-        console.log(this.state);
         let expand = this.state.expand
-        console.log(expand)
         this.setState({expand: !expand})
     }
 
     render() {
-        // let expand = this.state.expand;
         return (
+
             <div className={'gallery-container-outer'}>
                 <div className={'gallery-container-inner'}>
                     {
@@ -116,4 +143,4 @@ class Gallery extends Component {
     }
 }
 
-export default Gallery;
+export default withRouter(Gallery);

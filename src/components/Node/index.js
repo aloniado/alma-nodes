@@ -27,13 +27,11 @@ class Node extends Component {
         }
 
         this.calculatePosition();
+        console.log('...',this.state)
     }
 
     initNode() {
-
         window.expandedLevel = this.state.position.level + 1;
-        console.log(window.expandedLevel)
-
 
         let config = {
             headers: {
@@ -64,11 +62,9 @@ class Node extends Component {
                 id: this.props.id,
             })
 
-
     }
 
     async nodeClickHandler() {
-        console.log(this.state);
         //init node if no data yet:
         if (!this.state.init) {
             await this.initNode();
@@ -114,7 +110,7 @@ class Node extends Component {
         position.x = r * Math.cos(position.rotation * Math.PI / 180);   //px
         position.y = r * Math.sin(position.rotation * Math.PI / 180);   //px
 
-        console.log('calculating', window.expandedLevel, position)
+        console.log('>', window.expandedLevel, position)
 
         this.setState({
             position: position
@@ -133,8 +129,9 @@ class Node extends Component {
                 <div className={'node-container'} style={styles}>
                     {
                         this.state.type === 0 &&
-                        <div className={'folder-node node-icon'} onClick={this.nodeClickHandler}>
-                            <BsFillCircleFill className={this.props.headNode ? 'head-node' : ''}/>
+                        <div className={(this.props.extendedSibling === this.state.id && !this.props.headNode)
+                            || (this.props.headNode && this.state.headExpand)? 'folder-node node-icon folder-node-expanded' : 'folder-node node-icon'} onClick={this.nodeClickHandler}>
+                                <BsFillCircleFill className={this.props.headNode ? 'head-node' : ''}/>
                         </div>
                     }
                     {
@@ -166,7 +163,6 @@ class Node extends Component {
                                                                          siblingPosition: i,
                                                                          level: this.state.position.level + 1
                                                                      }}
-
                             />)
                         }
                     </div>

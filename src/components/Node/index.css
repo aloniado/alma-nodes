@@ -30,9 +30,10 @@
 }
 
 .folder-node-expanded {
-    color: gray;
+    color: #3c3c3c;
 }
 
 .head-node {
     font-size: 60px;
 }
+

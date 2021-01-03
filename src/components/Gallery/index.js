@@ -1,13 +1,10 @@
 import React, {Component} from "react";
 import './index.css';
 import axios from "axios";
+import {withRouter} from 'react-router-dom';
 
 import { BiExpand } from "react-icons/bi";
 import { BiCollapse } from "react-icons/bi";
-
-import {withRouter} from 'react-router-dom';
-
-
 
 class Gallery extends Component {
     constructor(props, history) {
@@ -17,7 +14,6 @@ class Gallery extends Component {
             expand: false
         };
     }
-
 
     /**
      * initializing component:
@@ -65,7 +61,6 @@ class Gallery extends Component {
                     }
                     this.setState({images: images});
                 }
-                console.log(this.state)
             }).catch((e) => {
             alert('Error getting image, going back home.')
             this.props.history.push('/')

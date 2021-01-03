@@ -30,6 +30,11 @@ class Node extends Component {
     }
 
     initNode() {
+
+        window.expandedLevel = this.state.position.level + 1;
+        console.log(window.expandedLevel)
+
+
         let config = {
             headers: {
                 'X-TOKEN': '2d4e69f4823176197ccf41caa5ee6456',
@@ -93,23 +98,25 @@ class Node extends Component {
         this.setState({
             extendedChild: value
         })
+
+        window.expandedLevel = value ? window.expandedLevel++ : window.expandedLevel--;
     }
 
     calculatePosition() {
         // console.log(this.state.position)
         let position = this.state.position
 
-        let angle = 90 / (position.siblingCount -1); // angle between npdes
+        let angle = 90 / (position.siblingCount - 1); // angle between npdes
 
         position.rotation = Math.round(angle * position.siblingPosition);
         position.level = this.props.position && this.props.position.level ? this.props.position.level : 0;
 
         let r = position.level * 200;
 
-        position.x = r * Math.cos(position.rotation * Math.PI / 180) ;   //px
-        position.y = r  * Math.sin(position.rotation * Math.PI / 180) ;   //px
+        position.x = r * Math.cos(position.rotation * Math.PI / 180);   //px
+        position.y = r * Math.sin(position.rotation * Math.PI / 180);   //px
 
-        console.log('calculating', position)
+        console.log('calculating', window.expandedLevel, position)
 
         this.setState({
             position: position
@@ -126,22 +133,22 @@ class Node extends Component {
         return (
             <div>
                 <div className={'node-container'} style={styles}>
-                {
-                    this.state.type === 0 &&
-                    <div className={'folder-node node-icon'}  onClick={this.nodeClickHandler}>
-                        <BsFillCircleFill className={this.props.headNode ? 'head-node' : ''} />
-                    </div>
-                }
-                {
-                    this.state.type === 1 &&
-                    <div className={'image-node node-icon'}>
-                        <Link
-                            to={'/picture?path=' + this.props.url.split('?path=')[1]}
-                            style={{color: 'inherit', textDecoration: 'inherit'}}>
-                            <BsFillCircleFill/>
-                        </Link>
-                    </div>
-                }
+                    {
+                        this.state.type === 0 &&
+                        <div className={'folder-node node-icon'} onClick={this.nodeClickHandler}>
+                            <BsFillCircleFill className={this.props.headNode ? 'head-node' : ''}/>
+                        </div>
+                    }
+                    {
+                        this.state.type === 1 &&
+                        <div className={'image-node node-icon'}>
+                            <Link
+                                to={'/picture?path=' + this.props.url.split('?path=')[1]}
+                                style={{color: 'inherit', textDecoration: 'inherit'}}>
+                                <BsFillCircleFill/>
+                            </Link>
+                        </div>
+                    }
                 </div>
 
                 {

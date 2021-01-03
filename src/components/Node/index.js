@@ -6,7 +6,6 @@ import {BsFillCircleFill} from "react-icons/bs";
 
 class Node extends Component {
 
-
     constructor(props) {
         super(props);
 
@@ -59,6 +58,8 @@ class Node extends Component {
                 extendedChild: null,
                 id: this.props.id,
             })
+
+
     }
 
     async nodeClickHandler() {
@@ -99,11 +100,15 @@ class Node extends Component {
         let position = this.state.position
 
         let angle = (90 / (position.siblingCount * 2));
-        position.rotation = angle + angle * 2 * position.siblingPosition;
-        position.distance = this.props.level ? this.props.level : 0
+        position.rotation = Math.round(angle + angle * 2 * position.siblingPosition);
+        position.level = this.props.position && this.props.position.level ? this.props.position.level : 0
+
+        console.log('calculating', position)
 
         this.setState({
             position: position
+        }, () => {
+            console.log(this.state.label, this.state.position)
         })
     }
 

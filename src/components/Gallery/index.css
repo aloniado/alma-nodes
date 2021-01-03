@@ -58,6 +58,7 @@
 }
 
 .primary-image {
+    max-width: 100%;
     min-width:100%;
     min-height:100%;
 }
@@ -71,12 +72,13 @@
 }
 
 .expand-container {
-    background-color: #fdfdfd54;
+    background-color: #0000001f;
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    border: 1px solid #7b7b7b;
+    border: 1px solid #ffffff5c;
     padding: 2px;
     position: absolute;
     margin: 5px;
+    color: #ffffffa1;
 }
